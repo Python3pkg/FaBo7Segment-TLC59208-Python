@@ -79,10 +79,10 @@ class TLC59208:
 
     ## コンストラクタ
     #  @param [in] addr I2C Slaveアドレスを指定
-    def __init__(self, addr=[SLAVE_ADDRESS], digits=1):
+    def __init__(self, addr=[SLAVE_ADDRESS]):
         for num in addr:
             self.address += [num]
-        self.digits = digits
+        self.digits = len(addr)
 
         self.configure()
     ## Configuring TLC59208F Device
@@ -147,15 +147,27 @@ class TLC59208:
         self.writePattern(self.address[digit], LED_OFF)
 
     ## show a number use full digit
-    #  @param [in] number show number
+    #  @param [in] number show number(int)
     def showNumberFullDigit(self, number):
+        minus_flg = 0
+
+        if number < 0:
+            minus_flg = 1
+            number *= -1
 
         for i in xrange(self.digits):
-            if number <= 0 :
-                self.clearNumber(i)
+            if number == 0 :
+                if minus_flg == 1:
+                    self.showPattern(LED_PIN_G, i)
+                    minus_flg = 0
+                elif i == 0:
+                    self.showNumber(number)
+                else:
+                    self.clearNumber(i)
             else:
                 self.showNumber(number % 10, i)
-            number /= 10;
+
+            number = int(number / 10);
 
     ## show dot
     #  @param [in] digit digit number
@@ -180,13 +192,18 @@ class TLC59208:
     #  @param [in] address register address
     def writePattern(self, address, data):
         pattern = []
-
         for i in xrange(8):
             if (data >> i) & 0x01:
                 pattern += [PWM_VALUE]
             else:
                 pattern += [LED_OFF]
-        bus.write_i2c_block_data(address, AUTO_INCREMENT_REG, pattern)
+
+        try:
+            bus.write_i2c_block_data(address, AUTO_INCREMENT_REG, pattern)
+        except:
+            # 7seg write error
+            pass
+
 
 if __name__ == "__main__":
     tlc59208 = TLC59208()
