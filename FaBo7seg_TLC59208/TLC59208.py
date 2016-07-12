@@ -13,7 +13,6 @@
 import smbus
 import time
 
-
 # Default I2C slave address
 SLAVE_ADDRESS = 0x20
 
@@ -71,20 +70,30 @@ LED_PIN_F  = 0x40
 LED_PIN_G  = 0x80
 LED_PIN_DP = 0x08
 
+## smbus
 bus = smbus.SMBus(1)
 
 ## FaBo7Seg_TLC59208 I2C Controll class
 class TLC59208:
     address = []
 
-    ## コンストラクタ
-    #  @param [in] addr I2C Slaveアドレスを指定
+    ## Constructor
+    #  @param [in] address TLC59208 i2c slave_address default:0x20
     def __init__(self, addr=[SLAVE_ADDRESS]):
-        for num in addr:
+        # type check
+        if isinstance(addr, list):
+            address = addr
+        else:
+            address = [addr]
+
+        # address set
+        for num in address:
             self.address += [num]
-        self.digits = len(addr)
+
+        self.digits = len(address)
 
         self.configure()
+
     ## Configuring TLC59208F Device
     #  @retval true normaly done
     #  @retval false device error
