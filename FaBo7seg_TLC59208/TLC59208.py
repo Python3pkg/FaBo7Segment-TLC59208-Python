@@ -1,6 +1,6 @@
 # coding: utf-8
-## @package FaBo7seg_TLC59208
-#  This is a library for the FaBo 7seg I2C Brick.
+## @package TLC59208
+#  This is a FaBo7Seg_TLC59208 library for the FaBo 7seg I2C Brick.
 #
 #  http://fabo.io/211.html
 #
@@ -73,7 +73,7 @@ LED_PIN_DP = 0x08
 ## smbus
 bus = smbus.SMBus(1)
 
-## FaBo7Seg_TLC59208 I2C Controll class
+## TLC59208 I2C Controll class
 class TLC59208:
     address = []
 
@@ -212,21 +212,3 @@ class TLC59208:
         except:
             # 7seg write error
             pass
-
-
-if __name__ == "__main__":
-    tlc59208 = TLC59208()
-    try:
-        print "show number"
-
-        while True:
-            for i in xrange(10):
-                tlc59208.showNumber(i)
-                time.sleep(0.5)
-            time.sleep(1)
-
-    except KeyboardInterrupt:
-        # 7segLED OFF
-        print
-        print "end"
-        tlc59208.showNumber(10)

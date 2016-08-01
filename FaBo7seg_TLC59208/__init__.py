@@ -1,1 +1,1 @@
-from TLC59208 import *
+from .TLC59208 import TLC59208
