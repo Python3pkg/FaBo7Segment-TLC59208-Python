@@ -120,7 +120,7 @@ class TLC59208:
             0xD0    # 11h: ALLCALLADR
         ]
 
-        for i in xrange(self.digits):
+        for i in range(self.digits):
             bus.write_i2c_block_data(self.address[i], 0x80, set_data)
 
     ## show a number
@@ -164,7 +164,7 @@ class TLC59208:
             minus_flg = 1
             number *= -1
 
-        for i in xrange(self.digits):
+        for i in range(self.digits):
             if number == 0 :
                 if minus_flg == 1:
                     self.showPattern(LED_PIN_G, i)
@@ -201,7 +201,7 @@ class TLC59208:
     #  @param [in] address register address
     def writePattern(self, address, data):
         pattern = []
-        for i in xrange(8):
+        for i in range(8):
             if (data >> i) & 0x01:
                 pattern += [PWM_VALUE]
             else:

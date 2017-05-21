@@ -17,7 +17,7 @@ tlc59208 = FaBo7Seg_TLC59208.TLC59208()
 
 try:
     while True:
-        for i in xrange(10):
+        for i in range(10):
             tlc59208.showNumber(i)
             time.sleep(0.5)
 

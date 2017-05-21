@@ -42,7 +42,7 @@ if __name__ == '__main__':
             data = readadc(TEMPPIN)
             volt = arduino_map(data, 0, 1023, 0, 5000);
             temp = arduino_map(volt, 300, 1600, -30, 100);
-            print "temp:", temp
+            print("temp:", temp)
             led.showNumberFullDigit(temp)
 
             test += 1

@@ -19,7 +19,7 @@ try:
     while True:
         tlc59208.showPattern(FaBo7Seg_TLC59208.LED_PIN_A | FaBo7Seg_TLC59208.LED_PIN_G | FaBo7Seg_TLC59208.LED_PIN_D);
         time.sleep(1)
-        for i in xrange(10):
+        for i in range(10):
             tlc59208.showPattern(FaBo7Seg_TLC59208.LED_PWM5)
             time.sleep(0.05)
             tlc59208.showPattern(FaBo7Seg_TLC59208.LED_PWM4)
